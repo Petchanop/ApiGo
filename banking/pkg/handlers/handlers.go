@@ -6,7 +6,7 @@
 /*   By: npiya-is <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 01:35:23 by npiya-is          #+#    #+#             */
-/*   Updated: 2023/06/07 22:07:20 by npiya-is         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:12:18 by npiya-is         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,24 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ApiGo/banking/pkg/types"
+	"github.com/ApiGo/banking/pkg/service"
 	"github.com/gorilla/mux"
 )
+
+type CustomerHandlers struct {
+	Service service.CustomerService
+}
 
 func Greeting(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, "hello world.")
 }
 
-func GetAllCustomers(w http.ResponseWriter, req *http.Request) {
-	customers := []types.Customer{
-		{Name: "Rati", City: "Bangkok", Zipcode: "10000"},
-		{Name: "Sivaluck", City: "Chiangmai", Zipcode: "50000"},
-	}
+func (ch *CustomerHandlers) GetAllCustomers(w http.ResponseWriter, req *http.Request) {
+	// customers := []domain.Customer{
+	// 	{Name: "Rati", City: "Bangkok", Zipcode: "10000"},
+	// 	{Name: "Sivaluck", City: "Chiangmai", Zipcode: "50000"},
+	// }
+	customers, _ := ch.Service.GetAllCustomer()
 	if req.Header.Get("Content-Type") == "application/xml" {
 		w.Header().Add("Content-type", "application/xml")
 		xml.NewEncoder(w).Encode(customers)
