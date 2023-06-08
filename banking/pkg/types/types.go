@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app.go                                             :+:      :+:    :+:   */
+/*   types.go                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npiya-is <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 01:37:57 by npiya-is          #+#    #+#             */
-/*   Updated: 2023/06/05 01:39:37 by npiya-is         ###   ########.fr       */
+/*   Created: 2023/06/06 15:22:48 by npiya-is          #+#    #+#             */
+/*   Updated: 2023/06/08 01:18:10 by npiya-is         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-package app
+package types
 
-import (
-	"log"
-	"net/http"
-)
+type Customer struct {
+	// Name    string `json:"full_name" xml:"name"`
+	// City    string `json:"city" xml:"city"`
+	// Zipcode string `json:"zip_code" xml:"zipcode"`
+	Id          string
+	Name        string
+	City        string
+	Zipcode     string
+	DateofBirth string
+	Status      string
+}
 
-func Start() {
-	http.HandleFunc("/", greeting)
-	http.HandleFunc("/customer", getAllCustomers)
-
-	log.Fatal(http.ListenAndServe(":8000", nil))
+type CustomerRepository interface {
+	FindAll() ([]Customer, error)
 }

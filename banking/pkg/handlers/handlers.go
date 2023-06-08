@@ -6,7 +6,7 @@
 /*   By: npiya-is <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 01:35:23 by npiya-is          #+#    #+#             */
-/*   Updated: 2023/06/05 01:38:44 by npiya-is         ###   ########.fr       */
+/*   Updated: 2023/06/07 22:07:20 by npiya-is         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ import (
 	"encoding/xml"
 	"fmt"
 	"net/http"
+
+	"github.com/ApiGo/banking/pkg/types"
+	"github.com/gorilla/mux"
 )
 
-func greeting(w http.ResponseWriter, req *http.Request) {
+func Greeting(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(w, "hello world.")
 }
 
-func getAllCustomers(w http.ResponseWriter, req *http.Request) {
-	customers := []Customer{
+func GetAllCustomers(w http.ResponseWriter, req *http.Request) {
+	customers := []types.Customer{
 		{Name: "Rati", City: "Bangkok", Zipcode: "10000"},
 		{Name: "Sivaluck", City: "Chiangmai", Zipcode: "50000"},
 	}
@@ -35,4 +38,13 @@ func getAllCustomers(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add("Content-type", "application/json")
 		json.NewEncoder(w).Encode(customers)
 	}
+}
+
+func GetCustomers(w http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	fmt.Fprint(w, vars["customer_id"])
+}
+
+func CreateCustomer(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(w, "Post request received.")
 }
